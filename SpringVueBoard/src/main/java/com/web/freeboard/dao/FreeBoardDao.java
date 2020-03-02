@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class FreeBoardDao {
 	@Autowired SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<String> freeBoardList(){
-		return sqlSessionTemplate.selectList("freeMapper.freeBoardList");
+	public List<String> freeBoardList(String title){
+		return sqlSessionTemplate.selectList("freeMapper.freeBoardList",title);
 	}
 }

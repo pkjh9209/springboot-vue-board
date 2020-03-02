@@ -3,5 +3,6 @@
 <mapper namespace="freeMapper">
 	<select id="freeBoardList" resultType="Map">
 		SELECT * FROM FREEBOARD
+		WHERE TITLE LIKE #{title} ORDER BY LPAD( NUM, 5 ) DESC
 	</select>
 </mapper>

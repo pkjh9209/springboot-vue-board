@@ -12,8 +12,8 @@ public class FreeBoardService {
 	@Autowired
 	private FreeBoardDao freeBoardDao;
 	
-	public List<String> freeBoardList() {
+	public List<String> freeBoardList(String title) {
 		 
-		return freeBoardDao.freeBoardList();
+		return freeBoardDao.freeBoardList(title);
 	}
 }

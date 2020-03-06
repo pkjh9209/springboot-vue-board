@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-
+  <div id="app" class="row col-sm-12">
     <router-view/>
   </div>
 </template>

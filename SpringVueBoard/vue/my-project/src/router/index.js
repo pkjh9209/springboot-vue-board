@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Example from '@/components/Example'
+import ContentList from '@/components/ContentList'
 import TodoPage from '@/components/TodoPage'
+import Detail from '@/components/Detail'
+import Create from '@/components/Create'
 
 Vue.use(Router)
 
@@ -10,18 +11,27 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: HelloWorld
+      name: 'Content',
+      component: ContentList,
+      props: true
     },
     {
-      path: '/example',
-      name: 'Example',
-      component: Example
+      path: '/detail/:num',
+      name: 'Detail',
+      component: Detail,
+      props: true
+    },
+    {
+      path: '/create/:num?',
+      name: 'Create',
+      component: Create,
+      props:true
     },
     {
       path: '/todos',
       name: 'TodoPage',
-      component: TodoPage
+      component: TodoPage,
+      props: true
     }
   ]
 })

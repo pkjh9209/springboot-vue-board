@@ -1,8 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="freeMapper">
-	<select id="freeBoardList" resultType="Map">
-		SELECT * FROM FREEBOARD
-		WHERE TITLE LIKE #{title} ORDER BY LPAD( NUM, 5 ) DESC
+	
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) 
+		FROM FREEBOARD
+		WHERE 1 = 1
+		<if test="dateStart != '' and dateEnd != ''">
+			AND BETWEEN #{dateStart} AND #{dateEnd}
+		</if>
 	</select>
+	
+	<select id="mainList" resultType="Map">
+	SELECT * FROM (
+			SELECT ROWNUM rnum, A.* 
+				FROM (
+                    SELECT 
+                     NUM
+           			 , TITLE
+				     , NAME
+				     , TO_CHAR(REGDATE,'YYYY/MM/DD') REGDATE
+				     , CONTENT  
+                    FROM FREEBOARD 
+                    WHERE 1 = 1
+					<if test="dateStart != '' and dateEnd != ''">
+						  AND TO_CHAR(REGDATE,'YYYYMMDD') BETWEEN #{dateStart} AND #{dateEnd}
+					</if>
+                    ORDER BY num DESC
+                    ) A
+                 )
+		WHERE rnum BETWEEN #{page.start} AND #{page.end}
+	</select>
+	
+	<insert id="insertBoard" parameterType="Map">
+		INSERT INTO FREEBOARD(
+			   NUM
+			 , TITLE
+			 , NAME
+			 , REGDATE
+			 , CONTENT
+			 )
+		VALUES(FREEBOARDNUM_SEQ.NEXTVAL
+			 , #{title}
+			 , #{name}
+			 , SYSDATE
+			 , #{content})
+	</insert>
+	
+	<select id="detailBoard" resultType="Map" parameterType="int">
+		SELECT NUM
+			 , TITLE
+			 , NAME
+			 , TO_CHAR(REGDATE,'YYYY/MM/DD') REGDATE
+			 , CONTENT
+		FROM FREEBOARD
+		WHERE NUM=#{num}
+	</select>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		UPDATE FREEBOARD
+		SET TITLE = #{title}
+			 , NAME = #{name}
+			 , CONTENT = #{content}
+		WHERE NUM = #{num}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE FROM FREEBOARD
+		WHERE NUM = #{num}
+	</delete>
+	
+
+	
 </mapper>

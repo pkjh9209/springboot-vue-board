@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-Vue.prototype.$http = axios
+import moment from 'moment'
 
 Vue.config.productionTip = false
+Vue.prototype.$http = axios
+Vue.prototype.moment = moment
 
 /* eslint-disable no-new */
 new Vue({
